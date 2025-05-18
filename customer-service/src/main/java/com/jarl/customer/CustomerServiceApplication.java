@@ -1,4 +1,4 @@
-package com.jarl.customer_service;
+package com.jarl.customer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,10 +1,10 @@
-package com.jarl.account_service;
+package com.jarl.customer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AccountServiceApplicationTests {
+class CustomerServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

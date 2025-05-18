@@ -1,4 +1,4 @@
-package com.jarl.account_service;
+package com.jarl.account;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
