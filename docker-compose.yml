@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  cliente-service:
+    build: ./cliente-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-clientes
+  cuenta-service:
+    build: ./cuenta-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-cuentas
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+  mysql-clientes:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: clientesdb
+  mysql-cuentas:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: cuentasdb
+
