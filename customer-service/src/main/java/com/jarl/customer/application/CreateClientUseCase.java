@@ -3,9 +3,9 @@ package com.jarl.customer.application;
 import com.jarl.customer.domain.Client;
 import com.jarl.customer.domain.ClientRepository;
 import com.jarl.customer.domain.ClientService;
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@Component
 public class CreateClientUseCase {
     private final ClientService service ;
 

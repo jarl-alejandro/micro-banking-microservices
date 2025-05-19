@@ -1,27 +1,69 @@
 version: '3.8'
+
 services:
-  cliente-service:
-    build: ./cliente-service
+  rabbitmq:
+    image: rabbitmq:3-management
     ports:
-      - "8081:8081"
-    depends_on:
-      - mysql-clientes
-  cuenta-service:
-    build: ./cuenta-service
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+
+  mysql-customer:
+    image: mysql:8
+    container_name: mysql-customer
+    restart: always
+    environment:
+      MYSQL_DATABASE: customerdb
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "8082:8082"
+      - "3307:3306"
+    volumes:
+      - ./customer-service/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mysql-account:
+    image: mysql:8
+    container_name: mysql-account
+    restart: always
+    environment:
+      MYSQL_DATABASE: accountdb
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./customer-service/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  customer-service:
+    build: ./customer-service
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-customer:3306/customerdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
-      - mysql-cuentas
+      - rabbitmq
+      - mysql-customer
+
+  account-service:
+    build: ./account-service
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-account:3306/accountdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+      - mysql-account
+
   api-gateway:
     build: ./api-gateway
     ports:
       - "8080:8080"
-  mysql-clientes:
-    image: mysql
-    environment:
-      MYSQL_DATABASE: clientesdb
-  mysql-cuentas:
-    image: mysql
-    environment:
-      MYSQL_DATABASE: cuentasdb
-
+    depends_on:
+      - customer-service
+      - account-service

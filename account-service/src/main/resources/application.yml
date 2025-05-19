@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: account-service
+  datasource:
+    url: jdbc:mysql://mysql-account:3306/accountdb
+  rabbitmq:
+    host: rabbitmq

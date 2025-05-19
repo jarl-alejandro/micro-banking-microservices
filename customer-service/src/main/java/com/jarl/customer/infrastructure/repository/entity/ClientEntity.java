@@ -1,8 +1,11 @@
 package com.jarl.customer.infrastructure.repository.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -11,8 +14,9 @@ import lombok.Setter;
 public class ClientEntity {
 
     @Id
-    @Column(nullable = false)
-    private String clientId;
+    @EqualsAndHashCode.Include
+    @Column(name = "client_id", columnDefinition = "CHAR(36)")
+    private UUID clientId;
 
     @Column(nullable = false)
     private String password;
@@ -21,7 +25,7 @@ public class ClientEntity {
     private boolean state;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "persona_id", referencedColumnName = "persona_id")
+    @JoinColumn(name = "persona_id", referencedColumnName = "identification")
     private PersonEntity person;
 
 }

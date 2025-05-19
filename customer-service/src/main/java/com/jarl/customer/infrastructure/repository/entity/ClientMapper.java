@@ -18,7 +18,7 @@ public class ClientMapper {
         person.setPhone(domain.getPhone().value());
 
         ClientEntity client = new ClientEntity();
-        client.setClientId(domain.getClientId().toString());
+        client.setClientId(domain.getClientId());
         client.setPassword(domain.getPassword());
         client.setState(domain.isState());
         client.setPerson(person);
@@ -29,7 +29,7 @@ public class ClientMapper {
     public static Client toDomain(ClientEntity entity) {
         PersonEntity p = entity.getPerson();
         return new Client(
-                UUID.fromString(entity.getClientId()),
+                entity.getClientId(),
                 p.getName(),
                 Gender.valueOf(p.getGender()),
                 p.getAge(),

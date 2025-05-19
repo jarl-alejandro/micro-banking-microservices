@@ -5,9 +5,11 @@ import com.jarl.customer.domain.ClientNotFountException;
 import com.jarl.customer.domain.ClientRepository;
 import com.jarl.customer.domain.ClientService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 @AllArgsConstructor
 public class DeleteClientUseCase {
     private final ClientRepository repository;

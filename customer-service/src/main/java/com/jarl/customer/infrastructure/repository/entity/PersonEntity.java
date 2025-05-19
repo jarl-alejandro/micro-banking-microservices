@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "persons")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class PersonEntity {
 
     @Id

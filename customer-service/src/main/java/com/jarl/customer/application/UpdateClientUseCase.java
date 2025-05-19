@@ -1,21 +1,18 @@
 package com.jarl.customer.application;
 
 import com.jarl.customer.domain.Client;
-import com.jarl.customer.domain.ClientNotFountException;
 import com.jarl.customer.domain.ClientRepository;
 import com.jarl.customer.domain.ClientService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.UUID;
 
-@AllArgsConstructor
+@Component
 public class UpdateClientUseCase {
-    private final ClientRepository repository;
     private final ClientService service;
 
     public UpdateClientUseCase(ClientRepository repository) {
-        this.repository = repository;
         this.service = new ClientService(repository);
     }
 

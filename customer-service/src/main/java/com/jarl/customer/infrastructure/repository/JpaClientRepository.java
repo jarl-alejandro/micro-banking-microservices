@@ -7,6 +7,7 @@ import com.jarl.customer.infrastructure.repository.entity.ClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,7 +23,7 @@ public class JpaClientRepository implements ClientRepository {
     }
 
     @Override
-    public Optional<Client> findId(String id) {
+    public Optional<Client> findById(String id) {
         return jpaRepository.findById(id)
                 .map(ClientMapper::toDomain);
     }
@@ -30,6 +31,13 @@ public class JpaClientRepository implements ClientRepository {
     @Override
     public void save(Client client) {
         jpaRepository.save(ClientMapper.toEntity(client));
+    }
+
+    @Override
+    public List<Client> list() {
+        return jpaRepository.findAll().stream()
+                .map(ClientMapper::toDomain)
+                .toList();
     }
 
 
